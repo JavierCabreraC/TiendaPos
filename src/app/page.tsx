@@ -1,24 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { 
-  Smartphone, 
-  Laptop, 
-  Headphones, 
-  ShoppingCart, 
-  User, 
-  Search, 
-  ChevronRight, 
-  Menu, 
-  X, 
-  Monitor, 
-  Tablet, 
-  Watch,
-  CreditCard,
-//   Truck,
-  Clock,
-  Star
+import {  Smartphone,  Laptop,  Headphones,  ShoppingCart,  User,  Search,  ChevronRight,  
+  Menu,  X,  Monitor,  Tablet,  Watch, CreditCard, Clock, Star, Settings
 } from 'lucide-react';
-import { Button } from '@/components/ui/index.ui';
+import { Button, LoginForm, ChangePasswordForm } from '@/components/ui/index.ui';
+
+
 
 // Tipo para productos destacados
 type FeaturedProduct = {
@@ -175,15 +162,14 @@ const ModernElectronicsStore: React.FC = () => {
     return stars;
   };
 
+  function setShowChangePassword(arg0: boolean): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        {/* Top Bar - Anuncios */}
-        {/* <div className="bg-indigo-600 text-white py-2 px-4 text-center text-sm">
-          <p>🔥 Envío gratis en pedidos superiores a $50 | Descuento de 10% en tu primera compra con el código: TECH10</p>
-        </div> */}
-        
+      <header className="bg-white shadow-sm sticky top-0 z-50">        
         {/* Main Header */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -208,31 +194,25 @@ const ModernElectronicsStore: React.FC = () => {
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium">Novedades</a>
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium">Soporte</a>
             </nav>
-            
-            {/* Barra de búsqueda */}
-            {/* <div className="hidden md:block flex-grow max-w-md mx-8">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Buscar productos..."
-                  className="w-full p-2 pl-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-              </div>
-            </div> */}
-            
             {/* Iconos de usuario */}
             <div className="flex items-center space-x-4">
               <button className="relative p-2 hover:text-blue-600 transition-colors">
                 <ShoppingCart size={24} />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">3</span>
-              </button>
+              </button>              
               <button 
                 className="hidden sm:flex items-center hover:text-blue-600 transition-colors"
                 onClick={() => setShowLogin(true)}
               >
                 <User size={24} className="mr-2" />
                 <span>Cuenta</span>
+              </button>
+              <button 
+                className="hidden sm:flex items-center hover:text-blue-600 transition-colors ml-4"
+                onClick={() => setShowChangePassword(true)}
+              >
+                <Settings size={24} className="mr-2" />
+                <span>Cambiar Contraseña</span>
               </button>
             </div>
           </div>
@@ -267,6 +247,22 @@ const ModernElectronicsStore: React.FC = () => {
       </header>
       
       <main className="flex-grow">
+        {/* Formularios de login y cambio de contraseña */}
+        {showLogin && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+              <LoginForm onClose={() => setShowLogin(false)} />
+            </div>
+          </div>
+        )}
+
+        {setShowChangePassword && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+              <ChangePasswordForm onClose={() => setShowChangePassword(false)} />
+            </div>
+          </div>
+        )}
         {/* Hero Banner Slider */}
         <section className="relative overflow-hidden bg-gradient-to-r from-gray-900 to-black">
           <div className="container mx-auto px-4 py-12 md:py-24">
@@ -338,15 +334,6 @@ const ModernElectronicsStore: React.FC = () => {
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* <div className="flex items-center p-6 bg-white rounded-lg shadow-sm">
-                <div className="rounded-full bg-blue-100 p-4 mr-4 text-blue-600">
-                  <Truck size={24} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">Envío Gratis</h3>
-                  <p className="text-gray-600">En compras superiores a $50</p>
-                </div>
-              </div> */}
               <div className="flex items-center p-6 bg-white rounded-lg shadow-sm">
                 <div className="rounded-full bg-blue-100 p-4 mr-4 text-blue-600">
                   <CreditCard size={24} />

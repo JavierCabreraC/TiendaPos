@@ -8,7 +8,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 interface LoginResponse {
     access_token: string;
-    rol: 'Administrador' | 'Veterinario' | 'Cliente';
+    rol: 'admin' | 'almacenista';
 }
 
 interface LoginErrorResponse {
@@ -49,17 +49,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
             localStorage.setItem('role', data.rol);
           
             switch (data.rol) {
-                case 'Administrador':
-                    router.push('/admin/adminDashboard');
+                case 'admin':
+                    router.push('/admin/dashboard');
                     break;
-                case 'Veterinario':
-                    router.push('/vetdoc/vetdocDashboard');
-                    break;
-                case 'Cliente':
-                    router.push('/client/clienteDashboard');
+                case 'almacenista':
+                    router.push('/almacen/dashboard');
                     break;
                 default:
-                    setError('Unknown role');
+                    setError('Rol no válido');
             }
         } catch (err) {
             setError(`Login failed: ${err instanceof Error ? err.message : 'Error Desconocido. Rol no válido.'}`);

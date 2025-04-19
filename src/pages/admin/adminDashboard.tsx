@@ -9,7 +9,7 @@ import { AdminLayout, UsuarioSection, MascotaSection, ReporteSection,
 
 const AdminDashboard = () => {
     const router = useRouter();
-    const { isAuthenticated, loading } = useAuth(['Administrador']);
+    const { isAuthenticated, loading } = useAuth(['admin']);
     const [ currentView, setCurrentView ] = useState<ViewState | null>(null);
 
     if (loading) {

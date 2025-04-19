@@ -1,18 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import '@/app/globals.css';
-import { 
-  ShoppingCart, 
-  Heart, 
-  User, 
-  LogOut, 
-  Search, 
-  X, 
-  Plus, 
-  Minus,
-//   ChevronDown
+import {  ShoppingCart,  Heart,  User,  LogOut,  Search,  X,  Plus,  Minus
 } from 'lucide-react';
 import { Button } from '@/components/ui/index.ui';
+
+
 
 // Tipos para nuestros productos
 type Product = {
