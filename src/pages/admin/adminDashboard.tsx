@@ -7,6 +7,7 @@ import { AdminLayout, UsuarioSection, MascotaSection, ReporteSection,
     ReservacionSection, ServiceSection } from '@/components/admin/index.admincomp';
 
 
+
 const AdminDashboard = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['admin']);

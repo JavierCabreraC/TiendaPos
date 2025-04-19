@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 
 
-export const useAuth = (allowedRoles: ('admin' | 'almacenista')[]) => {
+export const useAuth = (allowedRoles: ('admin' | 'almacenista' | 'cliente')[]) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -17,7 +17,7 @@ export const useAuth = (allowedRoles: ('admin' | 'almacenista')[]) => {
             return;
         }
 
-        if (!allowedRoles.includes(userRole as 'admin' | 'almacenista')) {
+        if (!allowedRoles.includes(userRole as 'admin' | 'almacenista' | 'cliente')) {
             router.push('/');
             return;
         }

@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import {  Smartphone,  Laptop,  Headphones,  ShoppingCart,  User,  Search,  ChevronRight,  
-  Menu,  X,  Monitor,  Tablet,  Watch, CreditCard, Clock, Star, Settings
+import { Smartphone, Laptop, Headphones, ShoppingCart, User, Search, ChevronRight,  
+  Menu, X, Monitor, Tablet, Watch, CreditCard, Clock, Star
 } from 'lucide-react';
 import { Button, LoginForm, ChangePasswordForm } from '@/components/ui/index.ui';
+import Image from 'next/image';
 
 
 
@@ -27,6 +28,7 @@ type Category = {
 
 const ModernElectronicsStore: React.FC = () => {
   const [showLogin, setShowLogin] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   
@@ -39,7 +41,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "iPhone 15 Pro Max", 
       price: 1199.99, 
       oldPrice: 1299.99,
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/iphone15.jpg", 
       rating: 4.8, 
       category: "Smartphones"
     },
@@ -47,7 +49,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 2, 
       name: "MacBook Air M3", 
       price: 1099.99, 
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/macbook.jpg", 
       rating: 4.9, 
       category: "Laptops"
     },
@@ -56,7 +58,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "Sony WH-1000XM5", 
       price: 349.99, 
       oldPrice: 399.99,
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/sony-headphones.jpg", 
       rating: 4.7, 
       category: "Audio"
     },
@@ -64,7 +66,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 4, 
       name: "Samsung Galaxy Tab S9", 
       price: 849.99, 
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/galaxy-tab.jpg", 
       rating: 4.6, 
       category: "Tablets"
     },
@@ -73,7 +75,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "Dell XPS 13 Plus", 
       price: 1499.99, 
       oldPrice: 1699.99,
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/dell-xps.jpg", 
       rating: 4.5, 
       category: "Laptops"
     },
@@ -81,7 +83,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 6, 
       name: "Apple Watch Series 9", 
       price: 399.99, 
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/apple-watch.jpg", 
       rating: 4.7, 
       category: "Wearables"
     },
@@ -90,7 +92,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "LG C3 OLED 65\"", 
       price: 1799.99, 
       oldPrice: 2099.99,
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/lg-tv.jpg", 
       rating: 4.9, 
       category: "TV & Monitores"
     },
@@ -98,7 +100,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 8, 
       name: "Bose QuietComfort Ultra", 
       price: 329.99, 
-      image: "/api/placeholder/500/500", 
+      image: "/images/products/bose-headphones.jpg", 
       rating: 4.6, 
       category: "Audio"
     }
@@ -121,21 +123,21 @@ const ModernElectronicsStore: React.FC = () => {
       subtitle: "Experimenta el poder del chip A17 Pro",
       cta: "Comprar ahora",
       bgColor: "from-blue-600 to-purple-600",
-      image: "/api/placeholder/600/400"
+      image: "/images/banners/iphone-banner.jpg"
     },
     {
       title: "Galaxy S24 Ultra",
       subtitle: "El futuro de la fotografía móvil",
       cta: "Ver detalles",
       bgColor: "from-green-600 to-blue-600",
-      image: "/api/placeholder/600/400"
+      image: "/images/banners/galaxy-banner.jpg"
     },
     {
       title: "MacBook Air M3",
       subtitle: "Poder y portabilidad incomparables",
       cta: "Descubrir",
       bgColor: "from-purple-600 to-pink-600",
-      image: "/api/placeholder/600/400"
+      image: "/images/banners/macbook-banner.jpg"
     }
   ];
 
@@ -161,10 +163,6 @@ const ModernElectronicsStore: React.FC = () => {
     }
     return stars;
   };
-
-  function setShowChangePassword(arg0: boolean): void {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -207,13 +205,6 @@ const ModernElectronicsStore: React.FC = () => {
                 <User size={24} className="mr-2" />
                 <span>Cuenta</span>
               </button>
-              <button 
-                className="hidden sm:flex items-center hover:text-blue-600 transition-colors ml-4"
-                onClick={() => setShowChangePassword(true)}
-              >
-                <Settings size={24} className="mr-2" />
-                <span>Cambiar Contraseña</span>
-              </button>
             </div>
           </div>
         </div>
@@ -237,10 +228,16 @@ const ModernElectronicsStore: React.FC = () => {
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Ofertas</a>
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Novedades</a>
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium py-2">Soporte</a>
-              <a href="#" className="flex items-center text-gray-800 hover:text-blue-600 font-medium py-2 mt-2">
+              <button 
+                className="flex items-center text-gray-800 hover:text-blue-600 font-medium py-2 mt-2"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setShowLogin(true);
+                }}
+              >
                 <User size={20} className="mr-2" />
                 <span>Mi cuenta</span>
-              </a>
+              </button>
             </nav>
           </div>
         )}
@@ -256,7 +253,7 @@ const ModernElectronicsStore: React.FC = () => {
           </div>
         )}
 
-        {setShowChangePassword && (
+        {showChangePassword && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
             <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
               <ChangePasswordForm onClose={() => setShowChangePassword(false)} />
@@ -284,10 +281,13 @@ const ModernElectronicsStore: React.FC = () => {
                     </div>
                   </div>
                   <div className="hidden md:flex w-1/2 items-center justify-center">
-                    <img 
+                    <Image 
                       src={slide.image} 
                       alt={slide.title} 
+                      width={600}
+                      height={400}
                       className="max-h-[350px] object-contain"
+                      priority={currentSlide === index}
                     />
                   </div>
                 </div>
@@ -375,9 +375,11 @@ const ModernElectronicsStore: React.FC = () => {
                         {Math.round((1 - product.price / product.oldPrice) * 100)}% OFF
                       </span>
                     )}
-                    <img 
+                    <Image 
                       src={product.image} 
                       alt={product.name} 
+                      width={500}
+                      height={500}
                       className="w-full h-56 object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform"
                     />
                   </div>

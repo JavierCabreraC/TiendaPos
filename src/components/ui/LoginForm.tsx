@@ -6,9 +6,11 @@ import { Button, Input } from '@/components/ui/index.ui';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 
+
 interface LoginResponse {
     access_token: string;
-    rol: 'admin' | 'almacenista';
+    refresh: string;
+    rol: 'admin' | 'almacenista' | 'cliente';
 }
 
 interface LoginErrorResponse {
@@ -33,33 +35,40 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
             const response = await fetch(API_CONFIG.ENDPOINTS.AUTH_LOGIN, {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({ email, password }),
             });
           
             if (!response.ok) {
                 const errorData: LoginErrorResponse = await response.json();
-                setError(errorData.message || 'Datos incorrectos. Intente de nuevo.');  // mostrar el mensaje del backend
+                setError(errorData.message || 'Datos incorrectos. Intente de nuevo.');
                 return;
             }
           
             const data: LoginResponse = await response.json();
             localStorage.setItem('token', data.access_token);
+            localStorage.setItem('refresh', data.refresh);
             localStorage.setItem('role', data.rol);
           
             switch (data.rol) {
                 case 'admin':
-                    router.push('/admin/dashboard');
+                    router.push('/admin/adminDashboard');
                     break;
                 case 'almacenista':
-                    router.push('/almacen/dashboard');
+                    router.push('/personal/personalDashboard');
+                    break;
+                case 'cliente':
+                    router.push('/client/clienteDashboard');
                     break;
                 default:
                     setError('Rol no válido');
             }
         } catch (err) {
-            setError(`Login failed: ${err instanceof Error ? err.message : 'Error Desconocido. Rol no válido.'}`);
+            console.error('Error de login:', err);
+            setError('Error de conexión. Por favor, intente nuevamente.');
         }
     };
 
