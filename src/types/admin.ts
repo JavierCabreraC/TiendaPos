@@ -88,6 +88,7 @@ export interface AdminHeaderProps {
 
 export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
 
+
 export interface UpdateModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -101,23 +102,20 @@ export interface UpdateModalProps {
 }
 
 export type PersonalForm = {
-    NombreCompleto: string;
-    Telefono: string;
-    NumeroCI: number;
-    Direccion: string;
-    Email: string;
-    FechaContratacion: string;
-    CargoID: number;
-    ProfesionID: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
+    fecha_contratacion: string;
 };
 
 export type ClienteForm = {
-    NombreCompleto: string;
-    Telefono: string;
-    Direccion: string;
-    Contacto: string;
-    Email: string;
-    NumeroCI: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
 };
 
 export type MascotaForm = {

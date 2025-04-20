@@ -41,7 +41,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "iPhone 15 Pro Max", 
       price: 1199.99, 
       oldPrice: 1299.99,
-      image: "/images/products/iphone15.jpg", 
+      image: "https://images.unsplash.com/photo-1695048133142-1a884b1c5b0c", 
       rating: 4.8, 
       category: "Smartphones"
     },
@@ -49,7 +49,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 2, 
       name: "MacBook Air M3", 
       price: 1099.99, 
-      image: "/images/products/macbook.jpg", 
+      image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8", 
       rating: 4.9, 
       category: "Laptops"
     },
@@ -58,7 +58,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "Sony WH-1000XM5", 
       price: 349.99, 
       oldPrice: 399.99,
-      image: "/images/products/sony-headphones.jpg", 
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e", 
       rating: 4.7, 
       category: "Audio"
     },
@@ -66,7 +66,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 4, 
       name: "Samsung Galaxy Tab S9", 
       price: 849.99, 
-      image: "/images/products/galaxy-tab.jpg", 
+      image: "https://images.unsplash.com/photo-1527698266440-12104e498b76", 
       rating: 4.6, 
       category: "Tablets"
     },
@@ -75,7 +75,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "Dell XPS 13 Plus", 
       price: 1499.99, 
       oldPrice: 1699.99,
-      image: "/images/products/dell-xps.jpg", 
+      image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853", 
       rating: 4.5, 
       category: "Laptops"
     },
@@ -83,7 +83,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 6, 
       name: "Apple Watch Series 9", 
       price: 399.99, 
-      image: "/images/products/apple-watch.jpg", 
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30", 
       rating: 4.7, 
       category: "Wearables"
     },
@@ -92,7 +92,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "LG C3 OLED 65\"", 
       price: 1799.99, 
       oldPrice: 2099.99,
-      image: "/images/products/lg-tv.jpg", 
+      image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1", 
       rating: 4.9, 
       category: "TV & Monitores"
     },
@@ -100,7 +100,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 8, 
       name: "Bose QuietComfort Ultra", 
       price: 329.99, 
-      image: "/images/products/bose-headphones.jpg", 
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e", 
       rating: 4.6, 
       category: "Audio"
     }
@@ -123,21 +123,21 @@ const ModernElectronicsStore: React.FC = () => {
       subtitle: "Experimenta el poder del chip A17 Pro",
       cta: "Comprar ahora",
       bgColor: "from-blue-600 to-purple-600",
-      image: "/images/banners/iphone-banner.jpg"
+      image: "https://images.unsplash.com/photo-1695048133142-1a884b1c5b0c"
     },
     {
       title: "Galaxy S24 Ultra",
       subtitle: "El futuro de la fotografía móvil",
       cta: "Ver detalles",
       bgColor: "from-green-600 to-blue-600",
-      image: "/images/banners/galaxy-banner.jpg"
+      image: "https://images.unsplash.com/photo-1706041001387-576f8ae372b0"
     },
     {
       title: "MacBook Air M3",
       subtitle: "Poder y portabilidad incomparables",
       cta: "Descubrir",
       bgColor: "from-purple-600 to-pink-600",
-      image: "/images/banners/macbook-banner.jpg"
+      image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8"
     }
   ];
 
