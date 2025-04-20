@@ -41,7 +41,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "iPhone 15 Pro Max", 
       price: 1199.99, 
       oldPrice: 1299.99,
-      image: "https://images.unsplash.com/photo-1695048133142-1a884b1c5b0c", 
+      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9", 
       rating: 4.8, 
       category: "Smartphones"
     },
@@ -66,7 +66,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 4, 
       name: "Samsung Galaxy Tab S9", 
       price: 849.99, 
-      image: "https://images.unsplash.com/photo-1527698266440-12104e498b76", 
+      image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0", 
       rating: 4.6, 
       category: "Tablets"
     },
@@ -92,7 +92,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "LG C3 OLED 65\"", 
       price: 1799.99, 
       oldPrice: 2099.99,
-      image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1", 
+      image: "https://images.unsplash.com/photo-1593784991095-a205069470b6", 
       rating: 4.9, 
       category: "TV & Monitores"
     },
@@ -100,7 +100,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 8, 
       name: "Bose QuietComfort Ultra", 
       price: 329.99, 
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e", 
+      image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b", 
       rating: 4.6, 
       category: "Audio"
     }
@@ -123,14 +123,14 @@ const ModernElectronicsStore: React.FC = () => {
       subtitle: "Experimenta el poder del chip A17 Pro",
       cta: "Comprar ahora",
       bgColor: "from-blue-600 to-purple-600",
-      image: "https://images.unsplash.com/photo-1695048133142-1a884b1c5b0c"
+      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
     },
     {
       title: "Galaxy S24 Ultra",
       subtitle: "El futuro de la fotografía móvil",
       cta: "Ver detalles",
       bgColor: "from-green-600 to-blue-600",
-      image: "https://images.unsplash.com/photo-1706041001387-576f8ae372b0"
+      image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf"
     },
     {
       title: "MacBook Air M3",
@@ -437,7 +437,11 @@ const ModernElectronicsStore: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                <img src="/api/placeholder/600/300" alt="Tech News" className="w-full h-48 object-cover" />
+                <img 
+                  src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9" 
+                  alt="Tech News" 
+                  className="w-full h-48 object-cover" 
+                />
                 <div className="p-6">
                   <div className="text-sm text-blue-600 mb-2">Noticias</div>
                   <h3 className="text-xl font-semibold mb-2">Los mejores smartphones de 2025</h3>
@@ -449,7 +453,11 @@ const ModernElectronicsStore: React.FC = () => {
               </div>
               
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                <img src="/api/placeholder/600/300" alt="Tech Guide" className="w-full h-48 object-cover" />
+                <img 
+                  src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853" 
+                  alt="Tech Guide" 
+                  className="w-full h-48 object-cover" 
+                />
                 <div className="p-6">
                   <div className="text-sm text-blue-600 mb-2">Guías</div>
                   <h3 className="text-xl font-semibold mb-2">Cómo elegir tu próximo ordenador</h3>
@@ -461,7 +469,11 @@ const ModernElectronicsStore: React.FC = () => {
               </div>
               
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                <img src="/api/placeholder/600/300" alt="Tech Review" className="w-full h-48 object-cover" />
+                <img 
+                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e" 
+                  alt="Tech Review" 
+                  className="w-full h-48 object-cover" 
+                />
                 <div className="p-6">
                   <div className="text-sm text-blue-600 mb-2">Reviews</div>
                   <h3 className="text-xl font-semibold mb-2">Review: Los nuevos auriculares con IA</h3>
