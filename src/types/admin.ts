@@ -11,7 +11,7 @@ export type ViewState =
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts' | 'list-pending-receipts'
     // Reportes
-    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios' | 'report-dinamico';
+    | 'report-clientes' | 'report-personal' | 'report-ventas';
 
 export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
 

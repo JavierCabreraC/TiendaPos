@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ViewState } from '@/types/admin';
-import { Users, PawPrint, Calendar, Briefcase, ChevronDown, FileText } from 'lucide-react';
-
+import { Users, FileText, ChevronDown } from 'lucide-react';
 
 interface SidebarProps {
     currentView: ViewState | null;
@@ -30,47 +29,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
                 { label: 'Registrar Personal', value: 'create-personal' },
                 { label: 'Listar Personal', value: 'list-personal' },
                 { label: 'Registrar Cliente', value: 'create-cliente' },
-                { label: 'Listar Clientes', value: 'list-cliente' },
-                { label: 'Usuarios Activos', value: 'list-usuarios-activos' },
-                { label: 'Usuarios Inactivos', value: 'list-usuarios-inactivos' },
-                { label: 'Ver Bitácora', value: 'list-logs' }
-            ]
-        },
-        {
-            title: 'Mascotas',
-            icon: <PawPrint className="w-5 h-5" />,
-            items: [
-                { label: 'Gestionar Razas', value: 'list-raza' },
-                { label: 'Registrar Mascota', value: 'create-mascota' },
-                { label: 'Listar Mascotas', value: 'list-mascota' }
-            ]
-        },
-        {
-            title: 'Reservaciones',
-            icon: <Calendar className="w-5 h-5" />,
-            items: [
-                { label: 'Listar Reservaciones', value: 'list-reservaciones' }, // muestra todas las reservaciones pendientes
-                { label: 'Reservaciones por Cliente', value: 'zzzxxx' } // muestra el historial de reservaciones de un cliente
-            ]
-        },
-        {
-            title: 'Servicios',
-            icon: <Briefcase className="w-5 h-5" />,
-            items: [
-                { label: 'Servicios Completados', value: 'list-completed-services' },
-                { label: 'Crear Recibo', value: 'create-receipt' },
-                { label: 'Listar Recibos', value: 'list-receipts' },
-                { label: 'Recibos Pendientes', value: 'list-pending-receipts' }
+                { label: 'Listar Clientes', value: 'list-cliente' }
             ]
         },
         {
             title: 'Reportes',
             icon: <FileText className="w-5 h-5" />,
             items: [
-                { label: 'Reporte de Bitácora', value: 'report-bitacora' },
-                { label: 'Servicios por Cliente', value: 'report-servicios' },
-                { label: 'Servicios de Veterinario', value: 'report-vet-servicios' },
-                { label: 'Reporte Dinámico de Servicios', value: 'report-dinamico' }
+                { label: 'Reporte de Clientes', value: 'report-clientes' },
+                { label: 'Reporte de Personal', value: 'report-personal' },
+                { label: 'Reporte de Ventas', value: 'report-ventas' }
             ]
         }
     ];
