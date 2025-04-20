@@ -21,26 +21,26 @@ export type CampoOrdenamiento = 'fecha' | 'tipo' | 'veterinario' | 'cantidad';
 
 export type Agrupacion = 'veterinario' | 'tipoServicio';
 
-export interface Personal extends Record<string, unknown> {
-    ID: number;
-    Nombre: string;
-    Telefono: string;
-    Direccion: string;
-    Fecha_De_Contratacion: string;
-    Activo: boolean;
-    Email: string;
-    Cargo: string;
-    Profesion: string;
+export interface Personal {
+    id: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
+    fecha_contratacion: string;
 }
 
-export interface Cliente extends Record<string, unknown> {
-    ClienteID: number;
-    NombreCompleto: string;
-    CI: string;
-    Contacto: string;
-    Telefono: string;
-    Direccion: string;
-    Email: string;
+export interface Cliente {
+    id: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
+    puntos_acumulados: number | null;
+    descuentos_disponibles: number | null;
+    descuentos_utilizados: number | null;
 }
 
 export interface Mascota extends Record<string, unknown> {
@@ -70,10 +70,11 @@ export interface Reservacion extends Record<string, unknown> {
     Estado: string;
 }
 
-export interface Usuario extends Record<string, unknown> {
-    UsuarioID: number;
-    Rol: string;
-    Estado: string;
+export interface Usuario {
+    id: number;
+    rol: 'admin' | 'almacenista' | 'cliente';
+    estado: 'activo' | 'inactivo';
+    fecha_creacion: string | null;
 }
 
 export interface ServiceCardProps {

@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
 import { UpdateModal } from '@/components/admin/index.admincomp';
 import { Button, Column, DataTable } from '@/components/ui/index.ui';
-import { API_CONFIG, ApiService,  } from '@/services/index.services';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { Cliente, UpdateType, UpdateForms } from '@/types/admin';
-
 
 interface ClientListProps {
     isLoading: boolean;
@@ -24,13 +23,17 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
     });
 
     const clientColumns: Column<Cliente>[] = [
-        { key: 'ClienteID', header: 'ID' },
-        { key: 'NombreCompleto', header: 'Nombre Completo' },
-        { key: 'Contacto', header: 'Contacto' },
-        { key: 'CI', header: 'Número Carnet' },
-        { key: 'Telefono', header: 'Teléfono' },
-        { key: 'Direccion', header: 'Dirección' },
-        { key: 'Email', header: 'Email' },
+        { key: 'id', header: 'ID' },
+        { key: 'nombre_completo', header: 'Nombre Completo' },
+        { key: 'numero_ci', header: 'Número CI' },
+        { key: 'telefono', header: 'Teléfono' },
+        { key: 'direccion', header: 'Dirección' },
+        { key: 'email', header: 'Email' },
+        { 
+            key: 'puntos_acumulados', 
+            header: 'Puntos',
+            render: (cliente: Cliente) => cliente.puntos_acumulados || '0'
+        },
         {
             key: 'actions',
             header: 'Editar',
@@ -47,34 +50,34 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
     ];
 
     const renderClientMobileCard = (cliente: Cliente) => (
-        <div key={cliente.ClienteID} className="bg-white rounded-lg shadow-md p-4 mb-4">
+        <div key={cliente.id} className="bg-white rounded-lg shadow-md p-4 mb-4">
             <div className="mb-2">
                 <span className="font-semibold">ID: </span>
-                <span>{cliente.ClienteID}</span>
+                <span>{cliente.id}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Nombre: </span>
-                <span>{cliente.NombreCompleto}</span>
+                <span>{cliente.nombre_completo}</span>
             </div>
             <div className="mb-2">
-                <span className="font-semibold">Contacto: </span>
-                <span>{cliente.Contacto}</span>
-            </div>
-            <div className="mb-2">
-                <span className="font-semibold">Carnet: </span>
-                <span>{cliente.CI}</span>
+                <span className="font-semibold">CI: </span>
+                <span>{cliente.numero_ci}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Teléfono: </span>
-                <span>{cliente.Telefono}</span>
+                <span>{cliente.telefono}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Dirección: </span>
-                <span>{cliente.Direccion}</span>
+                <span>{cliente.direccion}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Email: </span>
-                <span>{cliente.Email}</span>
+                <span>{cliente.email}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">Puntos: </span>
+                <span>{cliente.puntos_acumulados || '0'}</span>
             </div>
             <Button
                 onClick={() => handleEditCliente(cliente)}
@@ -105,11 +108,10 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
         setUpdateForm({
             ...updateForm,
             clienteUpdate: { 
-                ClienteID: cliente.ClienteID,
-                NombreCompleto: cliente.NombreCompleto,
-                Contacto: cliente.Contacto,
-                Telefono: cliente.Telefono,
-                Direccion: cliente.Direccion
+                ClienteID: cliente.id,
+                NombreCompleto: cliente.nombre_completo,
+                Telefono: cliente.telefono,
+                Direccion: cliente.direccion
             }
         });
         setShowUpdateModal(true);

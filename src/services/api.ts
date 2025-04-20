@@ -12,7 +12,7 @@ export class ApiService {
     }
 
     static async fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
-        const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, {
+        const response = await fetch(`${API_CONFIG.BASE_URL_LOCAL}${endpoint}`, {
             ...options,
             headers: this.getHeaders()
         });

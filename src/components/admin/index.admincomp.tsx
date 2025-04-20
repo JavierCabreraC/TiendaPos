@@ -21,7 +21,6 @@ export * from './usuarios/formularios/CrearPersonalForm';
 export * from './usuarios/listados/BitacoraList';
 export * from './usuarios/listados/ClienteList';
 export * from './usuarios/listados/PersonalList';
-export * from './usuarios/listados/UsuarioInactivoList';
 export * from './usuarios/listados/UsuarioList';
 
 export * from './usuarios/formularios/CrearClienteForm';

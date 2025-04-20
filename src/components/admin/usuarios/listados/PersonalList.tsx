@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
 import { UpdateModal } from '@/components/admin/index.admincomp';
 import { Button, Column, DataTable } from '@/components/ui/index.ui';
-import { API_CONFIG, ApiService,  } from '@/services/index.services';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { Personal, UpdateType, UpdateForms } from '@/types/admin';
-
 
 interface StaffListProps {
     isLoading: boolean;
@@ -24,17 +23,16 @@ export const PersonalList: React.FC<StaffListProps> = ({ isLoading, setIsLoading
     });
 
     const staffColumns: Column<Personal>[] = [
-        { key: 'ID', header: 'ID' },
-        { key: 'Nombre', header: 'Nombre' },
-        { key: 'Telefono', header: 'Teléfono' },
-        { key: 'Direccion', header: 'Dirección' },
-        { key: 'Email', header: 'Email' },
-        { key: 'Cargo', header: 'Cargo' },
-        { key: 'Profesion', header: 'Profesión' },
+        { key: 'id', header: 'ID' },
+        { key: 'nombre_completo', header: 'Nombre Completo' },
+        { key: 'numero_ci', header: 'Número CI' },
+        { key: 'telefono', header: 'Teléfono' },
+        { key: 'direccion', header: 'Dirección' },
+        { key: 'email', header: 'Email' },
         { 
-            key: 'Fecha_De_Contratacion', 
+            key: 'fecha_contratacion', 
             header: 'Fecha Contratación',
-            render: (personal: Personal) => new Date(personal.Fecha_De_Contratacion).toLocaleDateString()
+            render: (personal: Personal) => new Date(personal.fecha_contratacion).toLocaleDateString()
         },
         {
             key: 'actions',
@@ -52,38 +50,34 @@ export const PersonalList: React.FC<StaffListProps> = ({ isLoading, setIsLoading
     ];
 
     const renderStaffMobileCard = (personal: Personal) => (
-        <div key={personal.ID} className="bg-white rounded-lg shadow-md p-4 mb-4">
+        <div key={personal.id} className="bg-white rounded-lg shadow-md p-4 mb-4">
             <div className="mb-2">
                 <span className="font-semibold">ID: </span>
-                <span>{personal.ID}</span>
+                <span>{personal.id}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Nombre: </span>
-                <span>{personal.Nombre}</span>
+                <span>{personal.nombre_completo}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">CI: </span>
+                <span>{personal.numero_ci}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Teléfono: </span>
-                <span>{personal.Telefono}</span>
+                <span>{personal.telefono}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Dirección: </span>
-                <span>{personal.Direccion}</span>
+                <span>{personal.direccion}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Email: </span>
-                <span>{personal.Email}</span>
-            </div>
-            <div className="mb-2">
-                <span className="font-semibold">Cargo: </span>
-                <span>{personal.Cargo}</span>
-            </div>
-            <div className="mb-2">
-                <span className="font-semibold">Profesión: </span>
-                <span>{personal.Profesion}</span>
+                <span>{personal.email}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Fecha Contratación: </span>
-                <span>{new Date(personal.Fecha_De_Contratacion).toLocaleDateString()}</span>
+                <span>{new Date(personal.fecha_contratacion).toLocaleDateString()}</span>
             </div>
             <Button
                 onClick={() => handleEditStaff(personal)}
@@ -113,12 +107,11 @@ export const PersonalList: React.FC<StaffListProps> = ({ isLoading, setIsLoading
         setUpdateType('personal');
         setUpdateForm({
             ...updateForm,
-            personalUpdate: {
-                ID: personal.ID,
-                NombreCompleto: personal.Nombre,
-                Telefono: personal.Telefono,
-                Direccion: personal.Direccion,
-                // CargoID: personal.CargoID
+            personalUpdate: { 
+                ID: personal.id,
+                NombreCompleto: personal.nombre_completo,
+                Telefono: personal.telefono,
+                Direccion: personal.direccion
             }
         });
         setShowUpdateModal(true);

@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/index.ui';
 import { ApiService } from '@/services/api';
 import { API_CONFIG } from '@/services/constants';
 
-
-
 export const CreateClienteForm: React.FC = () => {
     const [formData, setFormData] = useState<ClienteForm>({
         nombre_completo: '',
@@ -18,7 +16,7 @@ export const CreateClienteForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_CLIENTES, {
+            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_CLIENTES_CREAR, {
                 method: 'POST',
                 body: JSON.stringify(formData)
             });

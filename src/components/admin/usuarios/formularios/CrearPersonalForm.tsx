@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/index.ui';
 import { ApiService } from '@/services/api';
 import { API_CONFIG } from '@/services/constants';
 
-
-
 export const CrearPersonalForm: React.FC = () => {
     const [formData, setFormData] = useState<PersonalForm>({
         nombre_completo: '',
@@ -19,7 +17,7 @@ export const CrearPersonalForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_PERSONAL, {
+            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_PERSONAL_CREAR, {
                 method: 'POST',
                 body: JSON.stringify(formData)
             });
