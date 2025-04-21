@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { UpdateModal } from '@/components/admin/index.admincomp';
-import { Button, Column, DataTable } from '@/components/ui/index.ui';
 import { API_CONFIG, ApiService } from '@/services/index.services';
+import { Button, Column, DataTable } from '@/components/ui/index.ui';
 import type { Personal, UpdateType, UpdateForms } from '@/types/admin';
+
+
 
 interface StaffListProps {
     isLoading: boolean;
