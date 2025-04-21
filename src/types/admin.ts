@@ -8,10 +8,11 @@ export type ViewState =
     | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
     // Reservaciones
     | 'list-reservaciones' | 'zzzxxx'
-    // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts' | 'list-pending-receipts'
     // Reportes
-    | 'report-clientes' | 'report-personal' | 'report-ventas';
+    | 'report-clientes' | 'report-personal' | 'report-ventas'
+    // Tienda
+    | 'categories' | 'products';
 
 export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
 
@@ -429,4 +430,20 @@ export interface ReciboPendiente {
     TransaccionID: string | null;
     NombreCliente: string;
     Detalles: string[];
+}
+
+export interface Categoria {
+    id: number;
+    nombre: string;
+    descripcion: string;
+    fecha_creacion: string;
+}
+
+export interface Producto {
+    id: number;
+    nombre: string;
+    precio: string;
+    stock_actual: number;
+    categoria: number;
+    activo: boolean;
 }

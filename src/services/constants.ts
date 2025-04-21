@@ -60,7 +60,9 @@ export const API_CONFIG = {
         DOC_RECETAMASCOTA:              '/vetdoc/recetasMascota/',
         DOC_RECETA:                     '/vetdoc/receta/',
         DOC_RESERVACIRUGIA:             '/vetdoc/reservacion/',
-        DOC_CIRUGIAFIN:                 '/vetdoc/cirugiaFin/'
+        DOC_CIRUGIAFIN:                 '/vetdoc/cirugiaFin/',
+        CATEGORIAS:                     '/productos/categorias/',
+        PRODUCTOS:                      '/productos/productos/',
     },
     ITEMS_PER_PAGE: 6
 } as const;

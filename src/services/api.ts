@@ -1,6 +1,5 @@
 import { API_CONFIG } from "./index.services";
-
-
+import { Categoria, Producto } from '@/types/admin';
 
 export class ApiService {
     private static getHeaders() {
@@ -22,5 +21,13 @@ export class ApiService {
         }
         
         return response.json();
+    }
+
+    static async getCategorias(): Promise<Categoria[]> {
+        return this.fetch<Categoria[]>(API_CONFIG.ENDPOINTS.CATEGORIAS);
+    }
+
+    static async getProductos(): Promise<Producto[]> {
+        return this.fetch<Producto[]>(API_CONFIG.ENDPOINTS.PRODUCTOS);
     }
 }

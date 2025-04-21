@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { ViewState } from '@/types/admin';
 import { Users, FileText, ChevronDown } from 'lucide-react';
 
+interface MenuItem {
+    id: ViewState;
+    label: string;
+    icon: string;
+}
+
 interface SidebarProps {
     currentView: ViewState | null;
     setCurrentView: (view: ViewState | null) => void;
-}
-
-interface MenuItem {
-    label: string;
-    value: ViewState;
+    menuItems?: MenuItem[];
 }
 
 interface MenuSection {
@@ -18,30 +20,37 @@ interface MenuSection {
     items: MenuItem[];
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, menuItems }) => {
     const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
-    const menuItems: MenuSection[] = [
+    const defaultMenuItems: MenuSection[] = [
         {
             title: 'Usuarios',
             icon: <Users className="w-5 h-5" />,
             items: [
-                { label: 'Registrar Personal', value: 'create-personal' },
-                { label: 'Listar Personal', value: 'list-personal' },
-                { label: 'Registrar Cliente', value: 'create-cliente' },
-                { label: 'Listar Clientes', value: 'list-cliente' }
+                { id: 'create-personal', label: 'Registrar Personal', icon: '👤' },
+                { id: 'list-personal', label: 'Listar Personal', icon: '📋' },
+                { id: 'create-cliente', label: 'Registrar Cliente', icon: '👥' },
+                { id: 'list-cliente', label: 'Listar Clientes', icon: '📋' }
             ]
         },
         {
             title: 'Reportes',
             icon: <FileText className="w-5 h-5" />,
             items: [
-                { label: 'Reporte de Clientes', value: 'report-clientes' },
-                { label: 'Reporte de Personal', value: 'report-personal' },
-                { label: 'Reporte de Ventas', value: 'report-ventas' }
+                { id: 'report-clientes', label: 'Reporte de Clientes', icon: '📊' },
+                { id: 'report-personal', label: 'Reporte de Personal', icon: '📊' },
+                { id: 'report-ventas', label: 'Reporte de Ventas', icon: '📊' }
             ]
         }
     ];
+
+    // Si se proporcionan menuItems personalizados, los usamos
+    const sections = menuItems ? [{
+        title: 'Menú Principal',
+        icon: <FileText className="w-5 h-5" />,
+        items: menuItems
+    }] : defaultMenuItems;
 
     // Manejar el click en una sección
     const handleSectionClick = (sectionTitle: string) => {
@@ -49,53 +58,41 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
     };
 
     return (
-        <aside className="w-64 bg-blue-800 text-white h-[calc(100vh-64px)]">
-            <div className="p-4">
-                <h2 className="text-xl font-bold mb-6">Actividades</h2>
-                <nav>
-                    {menuItems.map((section) => (
-                        <div key={section.title} className="mb-2">
-                            <button
-                                onClick={() => handleSectionClick(section.title)}
-                                className={`flex items-center w-full px-2 py-2 rounded transition-colors hover:bg-blue-700/50 ${
-                                    expandedSection === section.title ? 'bg-blue-700/50' : ''
-                                }`}
-                            >
-                                {section.icon}
-                                <span className="ml-2 font-semibold">{section.title}</span>
-                                <ChevronDown 
-                                    className={`ml-auto w-4 h-4 transition-transform ${
-                                        expandedSection === section.title ? 'rotate-180' : ''
-                                    }`}
-                                />
-                            </button>
-                            
-                            {/* Elementos de la sección */}
-                            <div
-                                className={`mt-1 space-y-1 overflow-hidden transition-all duration-200 ${
-                                    expandedSection === section.title 
-                                        ? 'max-h-96 opacity-100' 
-                                        : 'max-h-0 opacity-0'
-                                }`}
-                            >
+        <div className="w-64 bg-white shadow-md">
+            <nav className="mt-5 px-2">
+                {sections.map((section) => (
+                    <div key={section.title} className="mb-4">
+                        <button
+                            onClick={() => handleSectionClick(section.title)}
+                            className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                        >
+                            {section.icon}
+                            <span className="mx-4 font-medium">{section.title}</span>
+                            <ChevronDown className={`w-4 h-4 ml-auto transition-transform ${
+                                expandedSection === section.title ? 'transform rotate-180' : ''
+                            }`} />
+                        </button>
+                        {expandedSection === section.title && (
+                            <div className="mt-2 space-y-1">
                                 {section.items.map((item) => (
                                     <button
-                                        key={item.value}
-                                        onClick={() => setCurrentView(item.value)}
-                                        className={`w-full text-left px-9 py-2 rounded transition-colors ${
-                                            currentView === item.value
-                                                ? 'bg-blue-700 text-white'
-                                                : 'hover:bg-blue-700/50 text-gray-300'
-                                        }`}
+                                        key={item.id}
+                                        onClick={() => setCurrentView(item.id)}
+                                        className={`flex items-center w-full px-4 py-2 text-sm ${
+                                            currentView === item.id
+                                                ? 'bg-blue-50 text-blue-600'
+                                                : 'text-gray-600 hover:bg-gray-100'
+                                        } rounded-md`}
                                     >
+                                        <span className="mr-2">{item.icon}</span>
                                         {item.label}
                                     </button>
                                 ))}
                             </div>
-                        </div>
-                    ))}
-                </nav>
-            </div>
-        </aside>
+                        )}
+                    </div>
+                ))}
+            </nav>
+        </div>
     );
 };

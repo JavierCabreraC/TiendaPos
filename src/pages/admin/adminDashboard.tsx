@@ -5,6 +5,8 @@ import { ViewState } from '@/types/admin';
 import { logout, useAuth } from '@/hooks/index.hooks';
 import { AdminLayout, UsuarioSection, ReporteSection } from '@/components/admin/index.admincomp';
 
+
+
 const AdminDashboard = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['admin']);

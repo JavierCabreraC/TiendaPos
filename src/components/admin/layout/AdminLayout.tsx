@@ -2,19 +2,26 @@ import { Sidebar } from './Sidebar';
 import { ViewState } from '@/types/admin';
 import { AdminHeader } from './Header';
 
+interface MenuItem {
+    id: ViewState;
+    label: string;
+    icon: string;
+}
 
 interface AdminLayoutProps {
     children: React.ReactNode;
     currentView: ViewState | null;
     setCurrentView: (view: ViewState | null) => void;
     onLogout: () => void;
+    menuItems?: MenuItem[];
 }
 
 export const AdminLayout: React.FC<AdminLayoutProps> = ({
     children,
     currentView,
     setCurrentView,
-    onLogout
+    onLogout,
+    menuItems
 }) => {
     return (
         <div className="min-h-screen flex flex-col">
@@ -23,6 +30,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <Sidebar 
                     currentView={currentView}
                     setCurrentView={setCurrentView}
+                    menuItems={menuItems}
                 />
                 <main className="flex-1 bg-gray-50 p-6">
                     {children}
