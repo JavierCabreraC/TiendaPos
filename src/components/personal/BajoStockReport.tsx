@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 // import { API_CONFIG } from '@/services/index.services';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download } from 'lucide-react';
-import { generateBajoStockPDF } from '@/utils/index.utils';
+import { Download, FileSpreadsheet } from 'lucide-react';
+import { generateBajoStockPDF, generateBajoStockExcel } from '@/utils/index.utils';
 import { ProductoBajoStock } from '@/types/client';
 
 export const BajoStockReport: React.FC = () => {
@@ -41,6 +41,10 @@ export const BajoStockReport: React.FC = () => {
         generateBajoStockPDF(productos);
     };
 
+    const handleDownloadExcel = () => {
+        generateBajoStockExcel(productos);
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center h-64">
@@ -62,13 +66,22 @@ export const BajoStockReport: React.FC = () => {
             <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Productos con Bajo Stock</CardTitle>
                 {productos.length > 0 && (
-                    <button
-                        onClick={handleDownloadPDF}
-                        className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                        <Download className="h-4 w-4 mr-2" />
-                        Descargar PDF
-                    </button>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={handleDownloadPDF}
+                            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            <Download className="h-4 w-4 mr-2" />
+                            PDF
+                        </button>
+                        <button
+                            onClick={handleDownloadExcel}
+                            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                        >
+                            <FileSpreadsheet className="h-4 w-4 mr-2" />
+                            Excel
+                        </button>
+                    </div>
                 )}
             </CardHeader>
             <CardContent>
