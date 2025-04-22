@@ -12,6 +12,14 @@ const ProductList: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isCreating, setIsCreating] = useState(false);
+    const [newProduct, setNewProduct] = useState({
+        nombre: '',
+        precio: '',
+        stock_actual: '',
+        stock_minimo: '',
+        categoria: ''
+    });
     const itemsPerPage = 5;
 
     useEffect(() => {
@@ -28,6 +36,32 @@ const ProductList: React.FC = () => {
             console.error(err);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleCreate = async () => {
+        try {
+            const productData = {
+                ...newProduct,
+                precio: newProduct.precio,
+                stock_actual: parseInt(newProduct.stock_actual),
+                stock_minimo: parseInt(newProduct.stock_minimo),
+                categoria: newProduct.categoria,
+                activo: true
+            };
+            await ApiService.createProducto(productData);
+            setIsCreating(false);
+            setNewProduct({
+                nombre: '',
+                precio: '',
+                stock_actual: '',
+                stock_minimo: '',
+                categoria: ''
+            });
+            fetchData();
+        } catch (err) {
+            setError('Error al crear el producto');
+            console.error(err);
         }
     };
 
@@ -91,8 +125,84 @@ const ProductList: React.FC = () => {
                             </option>
                         ))}
                     </select>
+                    <Button
+                        onClick={() => setIsCreating(true)}
+                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    >
+                        Agregar Producto
+                    </Button>
                 </div>
             </div>
+
+            {isCreating && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-lg w-96">
+                        <h3 className="text-xl font-bold mb-4">Nuevo Producto</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Nombre</label>
+                                <input
+                                    type="text"
+                                    value={newProduct.nombre}
+                                    onChange={(e) => setNewProduct({...newProduct, nombre: e.target.value})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Precio</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={newProduct.precio}
+                                    onChange={(e) => setNewProduct({...newProduct, precio: e.target.value})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Stock Actual</label>
+                                <input
+                                    type="number"
+                                    value={newProduct.stock_actual}
+                                    onChange={(e) => setNewProduct({...newProduct, stock_actual: e.target.value})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Stock Mínimo</label>
+                                <input
+                                    type="number"
+                                    value={newProduct.stock_minimo}
+                                    onChange={(e) => setNewProduct({...newProduct, stock_minimo: e.target.value})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Categoría (ID)</label>
+                                <input
+                                    type="number"
+                                    value={newProduct.categoria}
+                                    onChange={(e) => setNewProduct({...newProduct, categoria: e.target.value})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div className="flex justify-end space-x-3">
+                                <Button
+                                    onClick={() => setIsCreating(false)}
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    onClick={handleCreate}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                                >
+                                    Crear
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className="overflow-x-auto">
                 <table className="min-w-full">

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Categoria } from '@/types/admin';
 import { ApiService } from '@/services/api';
 
+
+
 export const CategoryList = () => {
     const [categories, setCategories] = useState<Categoria[]>([]);
     const [loading, setLoading] = useState(true);

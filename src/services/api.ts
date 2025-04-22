@@ -2,6 +2,7 @@ import { API_CONFIG } from "./index.services";
 import { Categoria, Producto } from '@/types/admin';
 
 
+
 export class ApiService {
     private static getHeaders() {
         const token = localStorage.getItem('token');

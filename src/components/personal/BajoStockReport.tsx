@@ -1,10 +1,11 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-// import { API_CONFIG } from '@/services/index.services';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Download, FileSpreadsheet } from 'lucide-react';
 import { generateBajoStockPDF, generateBajoStockExcel } from '@/utils/index.utils';
 import { ProductoBajoStock } from '@/types/client';
+
+
 
 export const BajoStockReport: React.FC = () => {
     const [productos, setProductos] = useState<ProductoBajoStock[]>([]);
