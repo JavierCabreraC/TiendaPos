@@ -2,8 +2,8 @@ export const API_CONFIG = {
     BASE_URL: 'https://si2-parcial1-backend.onrender.com/api',
     BASE_URL_LOCAL: 'http://127.0.0.1:8000/api',
     ENDPOINTS: {
-        AUTH_LOGIN:                     'http://127.0.0.1:8000/api/usuarios/login/',
-        AUTH_LOGOUT:                    'http://127.0.0.1:8000/api/usuarios/logout/',
+        AUTH_LOGIN:                     'https://si2-parcial1-backend.onrender.com/api/usuarios/login/',
+        AUTH_LOGOUT:                    'https://si2-parcial1-backend.onrender.com/api/usuarios/logout/',
         ADM_PERSONAL:                   '/usuarios/admin/personal/',
         ADM_PERSONAL_CREAR:             '/usuarios/admin/personal/crear/',
         ADM_CLIENTES:                   '/usuarios/admin/cliente/',
