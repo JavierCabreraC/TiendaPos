@@ -58,7 +58,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
                     router.push('/admin/adminDashboard');
                     break;
                 case 'almacenista':
-                    router.push('personal/personalDashboard');
+                    router.push('personal/almacenistaDashboard');
                     break;
                 case 'cliente':
                     router.push('client/clienteDashboard');

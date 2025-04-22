@@ -7,7 +7,9 @@ import { AdminLayout } from '@/components/admin/index.admincomp';
 import { CategoryList } from '@/components/personal/CategoryList';
 import ProductList from '@/components/personal/ProductList';
 
-const PersonalDashboard = () => {
+
+
+const AlmacenistaDashboard = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['almacenista']);
     const [currentView, setCurrentView] = useState<ViewState | null>(null);
@@ -55,4 +57,4 @@ const PersonalDashboard = () => {
     );
 };
 
-export default PersonalDashboard;
+export default AlmacenistaDashboard;
