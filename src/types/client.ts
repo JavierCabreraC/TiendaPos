@@ -129,3 +129,11 @@ export interface HistorialReservacion {
     Estado: string;
     Cliente: string;
 }
+
+export interface ProductoBajoStock {
+    id: number;
+    nombre: string;
+    stock_actual: number;
+    stock_minimo: number;
+    categoria: string;
+}

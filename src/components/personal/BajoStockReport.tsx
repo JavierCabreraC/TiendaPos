@@ -2,16 +2,9 @@
 import React, { useEffect, useState } from 'react';
 // import { API_CONFIG } from '@/services/index.services';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-
-
-interface ProductoBajoStock {
-    id: number;
-    nombre: string;
-    stock_actual: number;
-    stock_minimo: number;
-    categoria: string;
-}
+import { Download } from 'lucide-react';
+import { generateBajoStockPDF } from '@/utils/index.utils';
+import { ProductoBajoStock } from '@/types/client';
 
 export const BajoStockReport: React.FC = () => {
     const [productos, setProductos] = useState<ProductoBajoStock[]>([]);
@@ -44,6 +37,10 @@ export const BajoStockReport: React.FC = () => {
         fetchProductos();
     }, []);
 
+    const handleDownloadPDF = () => {
+        generateBajoStockPDF(productos);
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center h-64">
@@ -62,8 +59,17 @@ export const BajoStockReport: React.FC = () => {
 
     return (
         <Card className="w-full">
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Productos con Bajo Stock</CardTitle>
+                {productos.length > 0 && (
+                    <button
+                        onClick={handleDownloadPDF}
+                        className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                        <Download className="h-4 w-4 mr-2" />
+                        Descargar PDF
+                    </button>
+                )}
             </CardHeader>
             <CardContent>
                 <div className="overflow-x-auto">

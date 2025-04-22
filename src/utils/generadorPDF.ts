@@ -1,7 +1,7 @@
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import type { DidDrawCellParams, ExtendedAutoTableSettings, 
-    HistorialReceta, HistorialVacuna, ReciboCli, ServicioHistorial } from '@/types/client';
+    HistorialReceta, HistorialVacuna, ReciboCli, ServicioHistorial, ProductoBajoStock } from '@/types/client';
 
 
 export const generateHistorialPDF = async (
@@ -218,4 +218,66 @@ export const generateRecibosPDF = async (data: ReciboCli[]): Promise<void> => {
     });
 
     doc.save(`historial-recibos-${new Date().toISOString().split('T')[0]}.pdf`);
+};
+
+export const generateBajoStockPDF = async (data: ProductoBajoStock[]): Promise<void> => {
+    const doc = new jsPDF();
+    
+    // Título
+    doc.setFontSize(16);
+    doc.text('Reporte de Productos con Bajo Stock', 20, 20);
+    
+    // Fecha de generación
+    doc.setFontSize(10);
+    doc.text(`Fecha de generación: ${new Date().toLocaleString()}`, 20, 30);
+    
+    // Preparar datos para la tabla
+    const headers = [
+        ['Producto', 'Categoría', 'Stock Actual', 'Stock Mínimo', 'Diferencia']
+    ];
+    
+    const rows = data.map(item => [
+        item.nombre,
+        item.categoria,
+        item.stock_actual.toString(),
+        item.stock_minimo.toString(),
+        (item.stock_minimo - item.stock_actual).toString()
+    ]);
+
+    // Configuración de la tabla
+    const tableConfig: ExtendedAutoTableSettings = {
+        head: headers,
+        body: rows,
+        startY: 40,
+        theme: 'grid',
+        styles: { 
+            fontSize: 8,
+            cellPadding: 2
+        },
+        columnStyles: {
+            0: { cellWidth: 40 },  // Producto
+            1: { cellWidth: 30 },  // Categoría
+            2: { cellWidth: 25 },  // Stock Actual
+            3: { cellWidth: 25 },  // Stock Mínimo
+            4: { cellWidth: 25 }   // Diferencia
+        },
+        // Colorear la diferencia según si está por debajo del mínimo
+        didDrawCell: (data: DidDrawCellParams) => {
+            if (data.section === 'body' && data.column.index === 4) {
+                const cell = data.cell;
+                const value = parseInt(cell.text[0]);
+                if (value > 0) {
+                    cell.styles.textColor = [255, 0, 0]; // Rojo
+                } else {
+                    cell.styles.textColor = [0, 128, 0]; // Verde
+                }
+            }
+        }
+    };
+
+    // Generar tabla
+    doc.autoTable(tableConfig);
+
+    // Descargar PDF
+    doc.save(`reporte-bajo-stock-${new Date().toISOString().split('T')[0]}.pdf`);
 };
