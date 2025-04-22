@@ -444,6 +444,7 @@ export interface Producto {
     nombre: string;
     precio: string;
     stock_actual: number;
+    stock_minimo: number;
     categoria: number;
     activo: boolean;
 }

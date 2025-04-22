@@ -33,14 +33,14 @@ export class ApiService {
     }
 
     static async createCategoria(categoria: Omit<Categoria, 'id'>): Promise<Categoria> {
-        return this.fetch<Categoria>(API_CONFIG.ENDPOINTS.CATEGORIAS, {
+        return this.fetch<Categoria>(API_CONFIG.ENDPOINTS.CATEGORIAS_CREAR, {
             method: 'POST',
             body: JSON.stringify(categoria)
         });
     }
 
     static async createProducto(producto: Omit<Producto, 'id'>): Promise<Producto> {
-        return this.fetch<Producto>(API_CONFIG.ENDPOINTS.PRODUCTOS, {
+        return this.fetch<Producto>(API_CONFIG.ENDPOINTS.PRODUCTOS_CREAR, {
             method: 'POST',
             body: JSON.stringify(producto)
         });

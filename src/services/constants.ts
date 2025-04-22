@@ -37,6 +37,8 @@ export const API_CONFIG = {
         CLI_HISRECIBOS:                 '/cliente/recibo/',
         CATEGORIAS:                     '/productos/categorias/',
         PRODUCTOS:                      '/productos/productos/',
+        PRODUCTOS_CREAR:                '/productos/productos/crear/',
+        CATEGORIAS_CREAR:               '/productos/categorias/crear/',
     },
     ITEMS_PER_PAGE: 6
 } as const;
