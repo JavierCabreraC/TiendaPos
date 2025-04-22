@@ -1,24 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { 
-  Smartphone, 
-  Laptop, 
-  Headphones, 
-  ShoppingCart, 
-  User, 
-  Search, 
-  ChevronRight, 
-  Menu, 
-  X, 
-  Monitor, 
-  Tablet, 
-  Watch,
-  CreditCard,
-//   Truck,
-  Clock,
-  Star
+import { Smartphone, Laptop, Headphones, ShoppingCart, User, Search, ChevronRight,  
+  Menu, X, Monitor, Tablet, Watch, CreditCard, Clock, Star
 } from 'lucide-react';
-import { Button } from '@/components/ui/index.ui';
+import { Button, LoginForm } from '@/components/ui/index.ui';
+import Image from 'next/image';
+
+
 
 // Tipo para productos destacados
 type FeaturedProduct = {
@@ -43,7 +31,7 @@ const ModernElectronicsStore: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   
-    console.log(showLogin);
+  console.log(showLogin);
 
   // Productos destacados de ejemplo
   const featuredProducts: FeaturedProduct[] = [
@@ -52,7 +40,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "iPhone 15 Pro Max", 
       price: 1199.99, 
       oldPrice: 1299.99,
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9", 
       rating: 4.8, 
       category: "Smartphones"
     },
@@ -60,7 +48,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 2, 
       name: "MacBook Air M3", 
       price: 1099.99, 
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8", 
       rating: 4.9, 
       category: "Laptops"
     },
@@ -69,7 +57,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "Sony WH-1000XM5", 
       price: 349.99, 
       oldPrice: 399.99,
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e", 
       rating: 4.7, 
       category: "Audio"
     },
@@ -77,7 +65,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 4, 
       name: "Samsung Galaxy Tab S9", 
       price: 849.99, 
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0", 
       rating: 4.6, 
       category: "Tablets"
     },
@@ -86,7 +74,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "Dell XPS 13 Plus", 
       price: 1499.99, 
       oldPrice: 1699.99,
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853", 
       rating: 4.5, 
       category: "Laptops"
     },
@@ -94,7 +82,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 6, 
       name: "Apple Watch Series 9", 
       price: 399.99, 
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30", 
       rating: 4.7, 
       category: "Wearables"
     },
@@ -103,7 +91,7 @@ const ModernElectronicsStore: React.FC = () => {
       name: "LG C3 OLED 65\"", 
       price: 1799.99, 
       oldPrice: 2099.99,
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1593784991095-a205069470b6", 
       rating: 4.9, 
       category: "TV & Monitores"
     },
@@ -111,7 +99,7 @@ const ModernElectronicsStore: React.FC = () => {
       id: 8, 
       name: "Bose QuietComfort Ultra", 
       price: 329.99, 
-      image: "/api/placeholder/500/500", 
+      image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b", 
       rating: 4.6, 
       category: "Audio"
     }
@@ -134,21 +122,21 @@ const ModernElectronicsStore: React.FC = () => {
       subtitle: "Experimenta el poder del chip A17 Pro",
       cta: "Comprar ahora",
       bgColor: "from-blue-600 to-purple-600",
-      image: "/api/placeholder/600/400"
+      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
     },
     {
       title: "Galaxy S24 Ultra",
       subtitle: "El futuro de la fotografía móvil",
       cta: "Ver detalles",
       bgColor: "from-green-600 to-blue-600",
-      image: "/api/placeholder/600/400"
+      image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf"
     },
     {
       title: "MacBook Air M3",
       subtitle: "Poder y portabilidad incomparables",
       cta: "Descubrir",
       bgColor: "from-purple-600 to-pink-600",
-      image: "/api/placeholder/600/400"
+      image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8"
     }
   ];
 
@@ -178,12 +166,7 @@ const ModernElectronicsStore: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        {/* Top Bar - Anuncios */}
-        {/* <div className="bg-indigo-600 text-white py-2 px-4 text-center text-sm">
-          <p>🔥 Envío gratis en pedidos superiores a $50 | Descuento de 10% en tu primera compra con el código: TECH10</p>
-        </div> */}
-        
+      <header className="bg-white shadow-sm sticky top-0 z-50">        
         {/* Main Header */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -208,25 +191,12 @@ const ModernElectronicsStore: React.FC = () => {
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium">Novedades</a>
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium">Soporte</a>
             </nav>
-            
-            {/* Barra de búsqueda */}
-            {/* <div className="hidden md:block flex-grow max-w-md mx-8">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Buscar productos..."
-                  className="w-full p-2 pl-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-              </div>
-            </div> */}
-            
             {/* Iconos de usuario */}
             <div className="flex items-center space-x-4">
               <button className="relative p-2 hover:text-blue-600 transition-colors">
                 <ShoppingCart size={24} />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">3</span>
-              </button>
+              </button>              
               <button 
                 className="hidden sm:flex items-center hover:text-blue-600 transition-colors"
                 onClick={() => setShowLogin(true)}
@@ -257,16 +227,31 @@ const ModernElectronicsStore: React.FC = () => {
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Ofertas</a>
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Novedades</a>
               <a href="#" className="text-gray-800 hover:text-blue-600 font-medium py-2">Soporte</a>
-              <a href="#" className="flex items-center text-gray-800 hover:text-blue-600 font-medium py-2 mt-2">
+              <button 
+                className="flex items-center text-gray-800 hover:text-blue-600 font-medium py-2 mt-2"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setShowLogin(true);
+                }}
+              >
                 <User size={20} className="mr-2" />
                 <span>Mi cuenta</span>
-              </a>
+              </button>
             </nav>
           </div>
         )}
       </header>
       
       <main className="flex-grow">
+        {/* Formularios de login y cambio de contraseña */}
+        {showLogin && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+              <LoginForm onClose={() => setShowLogin(false)} />
+            </div>
+          </div>
+        )}
+        
         {/* Hero Banner Slider */}
         <section className="relative overflow-hidden bg-gradient-to-r from-gray-900 to-black">
           <div className="container mx-auto px-4 py-12 md:py-24">
@@ -288,10 +273,13 @@ const ModernElectronicsStore: React.FC = () => {
                     </div>
                   </div>
                   <div className="hidden md:flex w-1/2 items-center justify-center">
-                    <img 
+                    <Image 
                       src={slide.image} 
                       alt={slide.title} 
+                      width={600}
+                      height={400}
                       className="max-h-[350px] object-contain"
+                      priority={currentSlide === index}
                     />
                   </div>
                 </div>
@@ -338,15 +326,6 @@ const ModernElectronicsStore: React.FC = () => {
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* <div className="flex items-center p-6 bg-white rounded-lg shadow-sm">
-                <div className="rounded-full bg-blue-100 p-4 mr-4 text-blue-600">
-                  <Truck size={24} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">Envío Gratis</h3>
-                  <p className="text-gray-600">En compras superiores a $50</p>
-                </div>
-              </div> */}
               <div className="flex items-center p-6 bg-white rounded-lg shadow-sm">
                 <div className="rounded-full bg-blue-100 p-4 mr-4 text-blue-600">
                   <CreditCard size={24} />
@@ -388,9 +367,11 @@ const ModernElectronicsStore: React.FC = () => {
                         {Math.round((1 - product.price / product.oldPrice) * 100)}% OFF
                       </span>
                     )}
-                    <img 
+                    <Image 
                       src={product.image} 
                       alt={product.name} 
+                      width={500}
+                      height={500}
                       className="w-full h-56 object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform"
                     />
                   </div>
@@ -448,7 +429,11 @@ const ModernElectronicsStore: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                <img src="/api/placeholder/600/300" alt="Tech News" className="w-full h-48 object-cover" />
+                <img 
+                  src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9" 
+                  alt="Tech News" 
+                  className="w-full h-48 object-cover" 
+                />
                 <div className="p-6">
                   <div className="text-sm text-blue-600 mb-2">Noticias</div>
                   <h3 className="text-xl font-semibold mb-2">Los mejores smartphones de 2025</h3>
@@ -460,7 +445,11 @@ const ModernElectronicsStore: React.FC = () => {
               </div>
               
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                <img src="/api/placeholder/600/300" alt="Tech Guide" className="w-full h-48 object-cover" />
+                <img 
+                  src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853" 
+                  alt="Tech Guide" 
+                  className="w-full h-48 object-cover" 
+                />
                 <div className="p-6">
                   <div className="text-sm text-blue-600 mb-2">Guías</div>
                   <h3 className="text-xl font-semibold mb-2">Cómo elegir tu próximo ordenador</h3>
@@ -472,7 +461,11 @@ const ModernElectronicsStore: React.FC = () => {
               </div>
               
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                <img src="/api/placeholder/600/300" alt="Tech Review" className="w-full h-48 object-cover" />
+                <img 
+                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e" 
+                  alt="Tech Review" 
+                  className="w-full h-48 object-cover" 
+                />
                 <div className="p-6">
                   <div className="text-sm text-blue-600 mb-2">Reviews</div>
                   <h3 className="text-xl font-semibold mb-2">Review: Los nuevos auriculares con IA</h3>
@@ -592,3 +585,4 @@ const ModernElectronicsStore: React.FC = () => {
 };
 
 export default ModernElectronicsStore;
+
