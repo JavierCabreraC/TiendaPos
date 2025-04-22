@@ -12,7 +12,9 @@ export type ViewState =
     // Reportes
     | 'report-clientes' | 'report-personal' | 'report-ventas'
     // Tienda
-    | 'categories' | 'products';
+    | 'categories' | 'products'
+    // Reportes de Almacén
+    | 'reports' | 'bajo-stock';
 
 export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
 

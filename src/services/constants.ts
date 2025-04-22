@@ -39,6 +39,7 @@ export const API_CONFIG = {
         PRODUCTOS:                      '/productos/productos/',
         PRODUCTOS_CREAR:                '/productos/productos/crear/',
         CATEGORIAS_CREAR:               '/productos/categorias/crear/',
+        REPORTE_STOCK:                  '/productos/reportes/bajo-stock/',
     },
     ITEMS_PER_PAGE: 6
 } as const;
