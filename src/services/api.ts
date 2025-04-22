@@ -1,71 +1,48 @@
 import { API_CONFIG } from "./index.services";
 import { Categoria, Producto } from '@/types/admin';
-import axios from "axios";
 
 
-
-const api = axios.create({
-    baseURL: API_CONFIG.BASE_URL_LOCAL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-// Interceptor para agregar el token a las peticiones
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-});
-
-export const ApiService = {
-    getHeaders() {
+export class ApiService {
+    private static getHeaders() {
         const token = localStorage.getItem('token');
         return {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         };
-    },
+    }
 
-    async fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    static async fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
         const response = await fetch(`${API_CONFIG.BASE_URL_LOCAL}${endpoint}`, {
             ...options,
             headers: this.getHeaders()
         });
-        
+
         if (!response.ok) {
             throw new Error(await response.text());
         }
-        
+
         return response.json();
-    },
+    }
 
-    async getCategorias(): Promise<Categoria[]> {
-        const response = await api.get(API_CONFIG.ENDPOINTS.CATEGORIAS);
-        return response.data;
-    },
+    static async getCategorias(): Promise<Categoria[]> {
+        return this.fetch<Categoria[]>(API_CONFIG.ENDPOINTS.CATEGORIAS);
+    }
 
-    async getProductos(): Promise<Producto[]> {
-        const response = await api.get(API_CONFIG.ENDPOINTS.PRODUCTOS);
-        return response.data;
-    },
+    static async getProductos(): Promise<Producto[]> {
+        return this.fetch<Producto[]>(API_CONFIG.ENDPOINTS.PRODUCTOS);
+    }
 
-    createCategoria: async (categoria: { nombre: string; descripcion: string }) => {
-        const response = await api.post(`${API_CONFIG.ENDPOINTS.CATEGORIAS}/crear/`, categoria);
-        return response.data;
-    },
+    static async createCategoria(categoria: Omit<Categoria, 'id'>): Promise<Categoria> {
+        return this.fetch<Categoria>(API_CONFIG.ENDPOINTS.CATEGORIAS, {
+            method: 'POST',
+            body: JSON.stringify(categoria)
+        });
+    }
 
-    createProducto: async (producto: {
-        nombre: string;
-        precio: number;
-        stock_actual: number;
-        stock_minimo: number;
-        categoria: number;
-        imagen_url?: string;
-    }) => {
-        const response = await api.post(`${API_CONFIG.ENDPOINTS.PRODUCTOS}/crear/`, producto);
-        return response.data;
-    },
-};
+    static async createProducto(producto: Omit<Producto, 'id'>): Promise<Producto> {
+        return this.fetch<Producto>(API_CONFIG.ENDPOINTS.PRODUCTOS, {
+            method: 'POST',
+            body: JSON.stringify(producto)
+        });
+    }
+}

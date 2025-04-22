@@ -58,10 +58,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
                     router.push('/admin/adminDashboard');
                     break;
                 case 'almacenista':
-                    router.push('/personal/personalDashboard');
+                    router.push('@/app/personal/personalDashboard');
                     break;
                 case 'cliente':
-                    router.push('/client/clienteDashboard');
+                    router.push('@/app/client/clienteDashboard');
                     break;
                 default:
                     setError('Rol no válido');

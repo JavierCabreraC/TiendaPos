@@ -10,7 +10,8 @@ export const CategoryList = () => {
     const [isCreating, setIsCreating] = useState(false);
     const [newCategory, setNewCategory] = useState({
         nombre: '',
-        descripcion: ''
+        descripcion: '',
+        fecha_creacion: new Date().toISOString()
     });
 
     useEffect(() => {
@@ -52,7 +53,7 @@ export const CategoryList = () => {
         try {
             await ApiService.createCategoria(newCategory);
             setIsCreating(false);
-            setNewCategory({ nombre: '', descripcion: '' });
+            setNewCategory({ nombre: '', descripcion: '', fecha_creacion: new Date().toISOString() });
             fetchCategories();
         } catch (err) {
             setError('Error al crear la categoría');

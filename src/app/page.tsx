@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Smartphone, Laptop, Headphones, ShoppingCart, User, Search, ChevronRight,  
   Menu, X, Monitor, Tablet, Watch, CreditCard, Clock, Star
 } from 'lucide-react';
-import { Button, LoginForm, ChangePasswordForm } from '@/components/ui/index.ui';
+import { Button, LoginForm } from '@/components/ui/index.ui';
 import Image from 'next/image';
 
 
@@ -28,11 +28,10 @@ type Category = {
 
 const ModernElectronicsStore: React.FC = () => {
   const [showLogin, setShowLogin] = useState(false);
-  const [showChangePassword, setShowChangePassword] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   
-    console.log(showLogin);
+  console.log(showLogin);
 
   // Productos destacados de ejemplo
   const featuredProducts: FeaturedProduct[] = [
@@ -252,14 +251,7 @@ const ModernElectronicsStore: React.FC = () => {
             </div>
           </div>
         )}
-
-        {showChangePassword && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
-              <ChangePasswordForm onClose={() => setShowChangePassword(false)} />
-            </div>
-          </div>
-        )}
+        
         {/* Hero Banner Slider */}
         <section className="relative overflow-hidden bg-gradient-to-r from-gray-900 to-black">
           <div className="container mx-auto px-4 py-12 md:py-24">

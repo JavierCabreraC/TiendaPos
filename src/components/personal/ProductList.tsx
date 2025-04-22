@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Producto, Categoria } from '@/types/admin';
 import { ApiService } from '@/services/api';
 
+
+
 const ProductList: React.FC = () => {
     const [products, setProducts] = useState<Producto[]>([]);
     const [categories, setCategories] = useState<Categoria[]>([]);
@@ -11,11 +13,12 @@ const ProductList: React.FC = () => {
     const [isCreating, setIsCreating] = useState(false);
     const [newProduct, setNewProduct] = useState({
         nombre: '',
-        precio: 0,
+        precio: '0',
         stock_actual: 0,
         stock_minimo: 0,
         categoria: 0,
-        imagen_url: ''
+        imagen_url: '',
+        activo: true
     });
 
     useEffect(() => {
@@ -63,11 +66,12 @@ const ProductList: React.FC = () => {
             setIsCreating(false);
             setNewProduct({
                 nombre: '',
-                precio: 0,
+                precio: '0',
                 stock_actual: 0,
                 stock_minimo: 0,
                 categoria: 0,
-                imagen_url: ''
+                imagen_url: '',
+                activo: true
             });
             fetchData();
         } catch (err) {
@@ -128,7 +132,7 @@ const ProductList: React.FC = () => {
                                 <input
                                     type="number"
                                     value={newProduct.precio}
-                                    onChange={(e) => setNewProduct({...newProduct, precio: parseFloat(e.target.value)})}
+                                    onChange={(e) => setNewProduct({...newProduct, precio: e.target.value})}
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                 />
                             </div>
