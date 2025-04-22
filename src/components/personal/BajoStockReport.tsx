@@ -15,7 +15,7 @@ export const BajoStockReport: React.FC = () => {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/productos/reportes/bajo-stock/', {
+                const response = await fetch('https://si2-parcial1-backend.onrender.com/api/productos/reportes/bajo-stock/', {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
