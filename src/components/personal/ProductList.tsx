@@ -13,6 +13,8 @@ const ProductList: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isCreating, setIsCreating] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editingProduct, setEditingProduct] = useState<Producto | null>(null);
     const [newProduct, setNewProduct] = useState({
         nombre: '',
         precio: '',
@@ -61,6 +63,35 @@ const ProductList: React.FC = () => {
             fetchData();
         } catch (err) {
             setError('Error al crear el producto');
+            console.error(err);
+        }
+    };
+
+    const handleEdit = async () => {
+        if (!editingProduct) return;
+        try {
+            const productData = {
+                nombre: editingProduct.nombre,
+                precio: editingProduct.precio,
+                stock_actual: editingProduct.stock_actual
+            };
+            await ApiService.updateProducto(editingProduct.id, productData);
+            setIsEditing(false);
+            setEditingProduct(null);
+            fetchData();
+        } catch (err) {
+            setError('Error al actualizar el producto');
+            console.error(err);
+        }
+    };
+
+    const handleDelete = async (id: number) => {
+        if (!window.confirm('¿Estás seguro de que deseas eliminar este producto?')) return;
+        try {
+            await ApiService.deleteProducto(id);
+            fetchData();
+        } catch (err) {
+            setError('Error al eliminar el producto');
             console.error(err);
         }
     };
@@ -204,6 +235,61 @@ const ProductList: React.FC = () => {
                 </div>
             )}
 
+            {isEditing && editingProduct && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-lg w-96">
+                        <h3 className="text-xl font-bold mb-4">Editar Producto</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Nombre</label>
+                                <input
+                                    type="text"
+                                    value={editingProduct.nombre}
+                                    onChange={(e) => setEditingProduct({...editingProduct, nombre: e.target.value})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Precio</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={editingProduct.precio}
+                                    onChange={(e) => setEditingProduct({...editingProduct, precio: e.target.value})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Stock Actual</label>
+                                <input
+                                    type="number"
+                                    value={editingProduct.stock_actual}
+                                    onChange={(e) => setEditingProduct({...editingProduct, stock_actual: parseInt(e.target.value)})}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div className="flex justify-end space-x-3">
+                                <Button
+                                    onClick={() => {
+                                        setIsEditing(false);
+                                        setEditingProduct(null);
+                                    }}
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    onClick={handleEdit}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                                >
+                                    Guardar
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="overflow-x-auto">
                 <table className="min-w-full">
                     <thead className="bg-gray-50">
@@ -248,11 +334,18 @@ const ProductList: React.FC = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <button 
+                                        onClick={() => {
+                                            setEditingProduct(product);
+                                            setIsEditing(true);
+                                        }}
                                         className="text-blue-600 hover:text-blue-900 mr-3"
                                     >
                                         Editar
                                     </button>
-                                    <button className="text-red-600 hover:text-red-900">
+                                    <button 
+                                        onClick={() => handleDelete(product.id)}
+                                        className="text-red-600 hover:text-red-900"
+                                    >
                                         Eliminar
                                     </button>
                                 </td>

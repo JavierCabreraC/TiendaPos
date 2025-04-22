@@ -46,4 +46,17 @@ export class ApiService {
             body: JSON.stringify(producto)
         });
     }
+
+    static async updateProducto(id: number, producto: Partial<Producto>): Promise<Producto> {
+        return this.fetch<Producto>(`${API_CONFIG.ENDPOINTS.PRODUCTOS}${id}/actualizar/`, {
+            method: 'PATCH',
+            body: JSON.stringify(producto)
+        });
+    }
+
+    static async deleteProducto(id: number): Promise<{ mensaje: string, id: number }> {
+        return this.fetch<{ mensaje: string, id: number }>(`${API_CONFIG.ENDPOINTS.PRODUCTOS}${id}/eliminar/`, {
+            method: 'DELETE'
+        });
+    }
 }
