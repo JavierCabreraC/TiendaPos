@@ -2,8 +2,6 @@ export * from './button';
 
 export * from './card';
 
-export * from './ChangePassword';
-
 export * from './CheckboxSimple';
 
 export * from './CustomCheckbox';

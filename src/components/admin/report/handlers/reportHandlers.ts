@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { BitacoraReport, FiltrosServicio, ReporteDinamico, ServicioReport, 
-    VetServicioReport } from "@/types/admin";
-import { generateBitacoraPDF, generateDynamicPDF, generateServiciosPDF, 
-    generateVetServiciosPDF } from "../../index.admincomp";
+import { BitacoraReport, FiltrosServicio, ReporteDinamico, ServicioReport } from "@/types/admin";
+import { generateBitacoraPDF, generateDynamicPDF, generateServiciosPDF } from "../../index.admincomp";
+
 
 
 export const useReportHandlers = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [reportData, setReportData] = useState<BitacoraReport[]>([]);
     const [serviciosData, setServiciosData] = useState<ServicioReport[]>([]);
-    const [vetServiciosData, setVetServiciosData] = useState<VetServicioReport[]>([]);
+    //const [vetServiciosData, setVetServiciosData] = useState<VetServicioReport[]>([]);
 
     const handleGenerateReport = async (ci: string) => {
         try {
@@ -43,22 +42,22 @@ export const useReportHandlers = () => {
         }
     };
 
-    const handleGenerateVetServiciosReport = async (ci: string) => {
-        try {
-            setIsLoading(true);
-            const data = await ApiService.fetch<VetServicioReport[]>(
-                `${API_CONFIG.ENDPOINTS.ADM_REPORTVETSERV}/${ci}`,
-                { method: 'GET' }
-            );
-            console.log(vetServiciosData);
-            setVetServiciosData(data);
-            await generateVetServiciosPDF(data, ci);
-        } catch (error) {
-            console.error('Error al generar reporte de servicios de veterinario:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    // const handleGenerateVetServiciosReport = async (ci: string) => {
+    //     try {
+    //         setIsLoading(true);
+    //         const data = await ApiService.fetch<VetServicioReport[]>(
+    //             `${API_CONFIG.ENDPOINTS.ADM_REPORTVETSERV}/${ci}`,
+    //             { method: 'GET' }
+    //         );
+    //         console.log(vetServiciosData);
+    //         setVetServiciosData(data);
+    //         await generateServiciosPDF(data, ci);
+    //     } catch (error) {
+    //         console.error('Error al generar reporte de servicios de veterinario:', error);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // };
 
     const handleGenerateDynamicReport = async (filtros: FiltrosServicio) => {
         try {
@@ -82,7 +81,7 @@ export const useReportHandlers = () => {
         isLoading,
         handleGenerateReport,
         handleGenerateServiciosReport,
-        handleGenerateVetServiciosReport,
+        //handleGenerateVetServiciosReport,
         handleGenerateDynamicReport
     };
 };

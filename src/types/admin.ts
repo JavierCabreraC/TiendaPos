@@ -8,10 +8,13 @@ export type ViewState =
     | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
     // Reservaciones
     | 'list-reservaciones' | 'zzzxxx'
-    // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts' | 'list-pending-receipts'
     // Reportes
-    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios' | 'report-dinamico';
+    | 'report-clientes' | 'report-personal' | 'report-ventas'
+    // Tienda
+    | 'categories' | 'products'
+    // Reportes de Almacén
+    | 'reports' | 'bajo-stock';
 
 export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
 
@@ -21,26 +24,26 @@ export type CampoOrdenamiento = 'fecha' | 'tipo' | 'veterinario' | 'cantidad';
 
 export type Agrupacion = 'veterinario' | 'tipoServicio';
 
-export interface Personal extends Record<string, unknown> {
-    ID: number;
-    Nombre: string;
-    Telefono: string;
-    Direccion: string;
-    Fecha_De_Contratacion: string;
-    Activo: boolean;
-    Email: string;
-    Cargo: string;
-    Profesion: string;
+export interface Personal {
+    id: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
+    fecha_contratacion: string;
 }
 
-export interface Cliente extends Record<string, unknown> {
-    ClienteID: number;
-    NombreCompleto: string;
-    CI: string;
-    Contacto: string;
-    Telefono: string;
-    Direccion: string;
-    Email: string;
+export interface Cliente {
+    id: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
+    puntos_acumulados: number | null;
+    descuentos_disponibles: number | null;
+    descuentos_utilizados: number | null;
 }
 
 export interface Mascota extends Record<string, unknown> {
@@ -70,10 +73,11 @@ export interface Reservacion extends Record<string, unknown> {
     Estado: string;
 }
 
-export interface Usuario extends Record<string, unknown> {
-    UsuarioID: number;
-    Rol: string;
-    Estado: string;
+export interface Usuario {
+    id: number;
+    rol: 'admin' | 'almacenista' | 'cliente';
+    estado: 'activo' | 'inactivo';
+    fecha_creacion: string | null;
 }
 
 export interface ServiceCardProps {
@@ -88,6 +92,7 @@ export interface AdminHeaderProps {
 
 export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
 
+
 export interface UpdateModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -101,23 +106,20 @@ export interface UpdateModalProps {
 }
 
 export type PersonalForm = {
-    NombreCompleto: string;
-    Telefono: string;
-    NumeroCI: number;
-    Direccion: string;
-    Email: string;
-    FechaContratacion: string;
-    CargoID: number;
-    ProfesionID: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
+    fecha_contratacion: string;
 };
 
 export type ClienteForm = {
-    NombreCompleto: string;
-    Telefono: string;
-    Direccion: string;
-    Contacto: string;
-    Email: string;
-    NumeroCI: number;
+    nombre_completo: string;
+    numero_ci: number;
+    telefono: string;
+    direccion: string;
+    email: string;
 };
 
 export type MascotaForm = {
@@ -430,4 +432,20 @@ export interface ReciboPendiente {
     TransaccionID: string | null;
     NombreCliente: string;
     Detalles: string[];
+}
+
+export interface Categoria {
+    id: number;
+    nombre: string;
+    descripcion: string;
+    fecha_creacion: string;
+}
+
+export interface Producto {
+    id: number;
+    nombre: string;
+    precio: string;
+    stock_actual: number;
+    categoria: string;
+    activo: boolean;
 }

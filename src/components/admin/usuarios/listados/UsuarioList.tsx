@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
 import type { Usuario } from '@/types/admin';
 import { Button, Column, DataTable } from '@/components/ui/index.ui';
-import { API_CONFIG, ApiService,  } from '@/services/index.services';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 // import { Column, DataTable } from '@/components/ui/DataTable';
 
 
@@ -15,10 +15,14 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
     const [userList, setUserList] = useState<Usuario[]>([]);
 
     const userColumns: Column<Usuario>[] = [
-        { key: 'UsuarioID', header: 'ID' },
-        { key: 'Rol', header: 'Rol' },
-        { key: 'Nombre', header: 'Nombre' },
-        { key: 'Estado', header: 'Estado' },
+        { key: 'id', header: 'ID' },
+        { key: 'rol', header: 'Rol' },
+        { key: 'estado', header: 'Estado' },
+        { 
+            key: 'fecha_creacion', 
+            header: 'Fecha Creación',
+            render: (usuario: Usuario) => usuario.fecha_creacion ? new Date(usuario.fecha_creacion).toLocaleDateString() : 'No especificada'
+        },
         {
             key: 'actions',
             header: 'Inhabilitar',
@@ -35,22 +39,22 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
     ];
 
     const renderUserMobileCard = (usuario: Usuario) => (
-        <div key={usuario.UsuarioID} className="bg-white rounded-lg shadow-md p-4 mb-4">
+        <div key={usuario.id} className="bg-white rounded-lg shadow-md p-4 mb-4">
             <div className="mb-2">
                 <span className="font-semibold">ID: </span>
-                <span>{usuario.UsuarioID}</span>
+                <span>{usuario.id}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Rol: </span>
-                <span>{usuario.Rol}</span>
-            </div>
-            <div className="mb-2">
-                <span className="font-semibold">Nombre: </span>
-                <span>{usuario.Rol}</span>
+                <span>{usuario.rol}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Estado: </span>
-                <span>{usuario.Estado}</span>
+                <span>{usuario.estado}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">Fecha Creación: </span>
+                <span>{usuario.fecha_creacion ? new Date(usuario.fecha_creacion).toLocaleDateString() : 'No especificada'}</span>
             </div>
             <Button
                 onClick={() => handleEditUsuario(usuario)}
@@ -81,9 +85,9 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
             setIsLoading(true);
             await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_USERS, {
                 method: 'PATCH',
-                body: JSON.stringify({ UsuarioID: usuario.UsuarioID })
+                body: JSON.stringify({ id: usuario.id })
             });
-            await loadUsuarioData(); // Recargar la lista después de la actualización
+            await loadUsuarioData();
         } catch (error) {
             console.error('Error al inhabilitar usuario:', error);
         } finally {

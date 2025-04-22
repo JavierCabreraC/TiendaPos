@@ -1,207 +1,146 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import { PersonalForm } from '@/types/admin';
-import { Button, Input } from '@/components/ui/index.ui';
-import { API_CONFIG, ApiService,  } from '@/services/index.services';
-
+import { Button } from '@/components/ui/index.ui';
+import { ApiService } from '@/services/api';
+import { API_CONFIG } from '@/services/constants';
 
 export const CrearPersonalForm: React.FC = () => {
-    const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
-    const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [staffForm, setPersonalForm] = useState<PersonalForm>({
-        NombreCompleto: '',
-        Telefono: '',
-        NumeroCI: 0,
-        Direccion: '',
-        Email: '',
-        FechaContratacion: '',
-        CargoID: 0,
-        ProfesionID: 0
+    const [formData, setFormData] = useState<PersonalForm>({
+        nombre_completo: '',
+        numero_ci: 0,
+        telefono: '',
+        direccion: '',
+        email: '',
+        fecha_contratacion: ''
     });
 
-    const handleCreatePersonal = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            setIsLoading(true);
-            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_PERSONAL, {
+            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_PERSONAL_CREAR, {
                 method: 'POST',
-                body: JSON.stringify(staffForm)
+                body: JSON.stringify(formData)
             });
-            // Resetear formulario
-            setPersonalForm({
-                NombreCompleto: '',
-                Telefono: '',
-                NumeroCI: 0,
-                Direccion: '',
-                Email: '',
-                FechaContratacion: '',
-                CargoID: 0,
-                ProfesionID: 0
+
+            // Limpiar el formulario después de una creación exitosa
+            setFormData({
+                nombre_completo: '',
+                numero_ci: 0,
+                telefono: '',
+                direccion: '',
+                email: '',
+                fecha_contratacion: ''
             });
-            setSuccessMessage("El personal ha sido registrado exitosamente");
-            setTimeout(() => setSuccessMessage(null), 2000);
+
+            alert('Personal creado exitosamente');
         } catch (error) {
-            console.error('Error al registrar personal:', error);
-            setErrorMessage("Hubo un error al registrar el personal");
-            setTimeout(() => setErrorMessage(null), 2000);
-        } finally {
-            setIsLoading(false);
+            console.error('Error:', error);
+            alert('Error al crear personal');
         }
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: name === 'numero_ci' ? Number(value) : value
+        }));
+    };
+
     return (
-        <div className="max-w-2xl mx-auto">
+        <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-6">Registrar Personal</h2>
-            {successMessage && (
-                <div className="mb-4 p-4 bg-green-100 text-green-700 rounded-md">
-                    {successMessage}
-                </div>
-            )}
-            {errorMessage && (
-                <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
-                    {errorMessage}
-                </div>
-            )}
-            <form onSubmit={handleCreatePersonal} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
                         Nombre Completo
                     </label>
-                    <Input
-                        value={staffForm.NombreCompleto}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            NombreCompleto: e.target.value
-                        })}
+                    <input
+                        type="text"
+                        name="nombre_completo"
+                        value={formData.nombre_completo}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         required
                     />
                 </div>
+
                 <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Número de CI
+                    </label>
+                    <input
+                        type="number"
+                        name="numero_ci"
+                        value={formData.numero_ci}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-300 rounded-md"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
                         Teléfono
                     </label>
-                    <Input
-                        value={staffForm.Telefono}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            Telefono: e.target.value
-                        })}
+                    <input
+                        type="tel"
+                        name="telefono"
+                        value={formData.telefono}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         required
                     />
                 </div>
+
                 <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Número de Cédula de Identidad
-                    </label>
-                    <Input
-                        value={staffForm.NumeroCI}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            NumeroCI: parseInt(e.target.value, 10)
-                        })}
-                        placeholder="Número de Carnet"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
                         Dirección
                     </label>
-                    <Input
-                        value={staffForm.Direccion}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            Direccion: e.target.value
-                        })}
+                    <input
+                        type="text"
+                        name="direccion"
+                        value={formData.direccion}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         required
                     />
                 </div>
+
                 <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
                         Email
                     </label>
-                    <Input
+                    <input
                         type="email"
-                        value={staffForm.Email}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            Email: e.target.value
-                        })}
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         required
                     />
                 </div>
+
                 <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
                         Fecha de Contratación
                     </label>
-                    <Input
+                    <input
                         type="date"
-                        value={staffForm.FechaContratacion}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            FechaContratacion: e.target.value
-                        })}
+                        name="fecha_contratacion"
+                        value={formData.fecha_contratacion}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         required
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Cargo
-                    </label>
-                    <select
-                        className="w-full border rounded-md p-2"
-                        value={staffForm.CargoID}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            CargoID: parseInt(e.target.value, 10)
-                        })}
-                        required
-                    >
-                        <option value="">Seleccione un cargo</option>
-                        <option value="2">Veterinario</option>
-                        <option value="3">Laboratorista</option>
-                        <option value="4">Enfermero</option>
-                        <option value="5">Peluquero</option>
-                        <option value="6">Practicante</option>
-                    </select>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Profesión
-                    </label>
-                    <select
-                        className="w-full border rounded-md p-2"
-                        value={staffForm.ProfesionID}
-                        onChange={(e) => setPersonalForm({
-                            ...staffForm,
-                            ProfesionID: parseInt(e.target.value, 10)
-                        })}
-                        required
-                    >
-                        <option value="">Seleccione una profesión</option>
-                        <option value="1">Médico Veterinario</option>
-                        <option value="3">Bioquímico</option>
-                        <option value="4">Enfermero</option>
-                        <option value="5">Estudiante</option>
-                    </select>
-                </div>
-                <div className="flex gap-4">
-                    <Button 
-                        type="button" 
-                        variant="outline"
-                        onClick={() => router.push('/admin/dashboard')}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button 
-                        type="submit"
-                        disabled={isLoading}
-                    >
-                        {isLoading ? 'Registrando...' : 'Registrar Personal'}
-                    </Button>
-                </div>
+
+                <Button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md"
+                >
+                    Registrar Personal
+                </Button>
             </form>
         </div>
     );

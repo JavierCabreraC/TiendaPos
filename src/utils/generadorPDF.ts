@@ -1,7 +1,8 @@
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import * as XLSX from 'xlsx';
 import type { DidDrawCellParams, ExtendedAutoTableSettings, 
-    HistorialReceta, HistorialVacuna, ReciboCli, ServicioHistorial } from '@/types/client';
+    HistorialReceta, HistorialVacuna, ReciboCli, ServicioHistorial, ProductoBajoStock } from '@/types/client';
 
 
 export const generateHistorialPDF = async (
@@ -218,4 +219,125 @@ export const generateRecibosPDF = async (data: ReciboCli[]): Promise<void> => {
     });
 
     doc.save(`historial-recibos-${new Date().toISOString().split('T')[0]}.pdf`);
+};
+
+export const generateBajoStockPDF = async (data: ProductoBajoStock[]): Promise<void> => {
+    const doc = new jsPDF();
+    
+    // Título
+    doc.setFontSize(16);
+    doc.text('Reporte de Productos con Bajo Stock', 20, 20);
+    
+    // Fecha de generación
+    doc.setFontSize(10);
+    doc.text(`Fecha de generación: ${new Date().toLocaleString()}`, 20, 30);
+    
+    // Preparar datos para la tabla
+    const headers = [
+        ['Producto', 'Categoría', 'Stock Actual', 'Stock Mínimo', 'Diferencia']
+    ];
+    
+    const rows = data.map(item => [
+        item.nombre,
+        item.categoria,
+        item.stock_actual.toString(),
+        item.stock_minimo.toString(),
+        (item.stock_minimo - item.stock_actual).toString()
+    ]);
+
+    // Configuración de la tabla
+    const tableConfig: ExtendedAutoTableSettings = {
+        head: headers,
+        body: rows,
+        startY: 40,
+        theme: 'grid',
+        styles: { 
+            fontSize: 8,
+            cellPadding: 2
+        },
+        columnStyles: {
+            0: { cellWidth: 40 },  // Producto
+            1: { cellWidth: 30 },  // Categoría
+            2: { cellWidth: 25 },  // Stock Actual
+            3: { cellWidth: 25 },  // Stock Mínimo
+            4: { cellWidth: 25 }   // Diferencia
+        },
+        // Colorear la diferencia según si está por debajo del mínimo
+        didDrawCell: (data: DidDrawCellParams) => {
+            if (data.section === 'body' && data.column.index === 4) {
+                const cell = data.cell;
+                const value = parseInt(cell.text[0]);
+                if (value > 0) {
+                    cell.styles.textColor = [255, 0, 0]; // Rojo
+                } else {
+                    cell.styles.textColor = [0, 128, 0]; // Verde
+                }
+            }
+        }
+    };
+
+    // Generar tabla
+    doc.autoTable(tableConfig);
+
+    // Descargar PDF
+    doc.save(`reporte-bajo-stock-${new Date().toISOString().split('T')[0]}.pdf`);
+};
+
+export const generateBajoStockExcel = async (data: ProductoBajoStock[]): Promise<void> => {
+    // Crear un nuevo libro de Excel
+    const wb = XLSX.utils.book_new();
+    
+    // Preparar los datos para la hoja
+    const headers = ['Producto', 'Categoría', 'Stock Actual', 'Stock Mínimo', 'Diferencia'];
+    const rows = data.map(item => [
+        item.nombre,
+        item.categoria,
+        item.stock_actual,
+        item.stock_minimo,
+        item.stock_minimo - item.stock_actual
+    ]);
+    
+    // Crear la hoja de cálculo
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+    
+    // Aplicar estilos a las celdas
+    const range = XLSX.utils.decode_range(ws['!ref'] || 'A1');
+    for (let R = range.s.r; R <= range.e.r; ++R) {
+        for (let C = range.s.c; C <= range.e.c; ++C) {
+            const cell_address = { c: C, r: R };
+            const cell_ref = XLSX.utils.encode_cell(cell_address);
+            
+            // Estilo para la cabecera
+            if (R === 0) {
+                ws[cell_ref].s = {
+                    font: { bold: true },
+                    fill: { fgColor: { rgb: "E6E6E6" } }
+                };
+            }
+            
+            // Colorear la columna de diferencia
+            if (C === 4 && R > 0) {
+                const value = Number(rows[R-1][4]);
+                ws[cell_ref].s = {
+                    font: { color: { rgb: value > 0 ? "FF0000" : "008000" } }
+                };
+            }
+        }
+    }
+    
+    // Ajustar el ancho de las columnas
+    ws['!cols'] = [
+        { wch: 40 }, // Producto
+        { wch: 30 }, // Categoría
+        { wch: 15 }, // Stock Actual
+        { wch: 15 }, // Stock Mínimo
+        { wch: 15 }  // Diferencia
+    ];
+    
+    // Añadir la hoja al libro
+    XLSX.utils.book_append_sheet(wb, ws, "Productos Bajo Stock");
+    
+    // Generar el archivo y descargarlo
+    const fecha = new Date().toISOString().split('T')[0];
+    XLSX.writeFile(wb, `reporte-bajo-stock-${fecha}.xlsx`);
 };

@@ -2,26 +2,27 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 
-export const useAuth = (allowedRoles: string[]) => {
+
+export const useAuth = (allowedRoles: ('admin' | 'almacenista' | 'cliente')[]) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const userRole = localStorage.getItem('role'); // Obtenemos el rol guardado al hacer login
+        const userRole = localStorage.getItem('role');
 
         if (!token || !userRole) {
-            router.push('/');  // Si no hay token o rol, redirigir al login o home
+            router.push('/');
             return;
         }
 
-        if (!allowedRoles.includes(userRole)) {
-            router.push('/');  // Si el rol no está permitido en esta ruta, redirige al inicio
+        if (!allowedRoles.includes(userRole as 'admin' | 'almacenista' | 'cliente')) {
+            router.push('/');
             return;
         }
 
-        setIsAuthenticated(true);  // Si el rol es correcto, permite acceso
+        setIsAuthenticated(true);
         setLoading(false);
     }, [router, allowedRoles]);
 
