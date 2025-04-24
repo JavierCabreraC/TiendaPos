@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Categoria } from '@/types/admin';
 import { ApiService } from '@/services/api';
+import { Pencil, Trash2 } from 'lucide-react';
 
 
 
@@ -213,11 +214,13 @@ export const CategoryList = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <button 
                                         onClick={() => handleEdit(category)}
-                                        className="text-blue-600 hover:text-blue-900 mr-3"
+                                        className="text-blue-600 hover:text-blue-900 mr-3 flex items-center"
                                     >
+                                        <Pencil className="h-4 w-4 mr-1" />
                                         Editar
                                     </button>
-                                    <button className="text-red-600 hover:text-red-900">
+                                    <button className="text-red-600 hover:text-red-900 flex items-center">
+                                        <Trash2 className="h-4 w-4 mr-1" />
                                         Eliminar
                                     </button>
                                 </td>

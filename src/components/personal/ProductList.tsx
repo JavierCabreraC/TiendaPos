@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Producto } from '@/types/admin';
 import { ApiService } from '@/services/api';
 import { Button } from '@/components/ui/index.ui';
+import { Pencil, Trash2 } from 'lucide-react';
 
 
 
@@ -338,14 +339,16 @@ const ProductList: React.FC = () => {
                                             setEditingProduct(product);
                                             setIsEditing(true);
                                         }}
-                                        className="text-blue-600 hover:text-blue-900 mr-3"
+                                        className="text-blue-600 hover:text-blue-900 mr-3 flex items-center"
                                     >
+                                        <Pencil className="h-4 w-4 mr-1" />
                                         Editar
                                     </button>
                                     <button 
                                         onClick={() => handleDelete(product.id)}
-                                        className="text-red-600 hover:text-red-900"
+                                        className="text-red-600 hover:text-red-900 flex items-center"
                                     >
+                                        <Trash2 className="h-4 w-4 mr-1" />
                                         Eliminar
                                     </button>
                                 </td>
